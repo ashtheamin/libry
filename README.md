@@ -1,2 +1,2 @@
-# libry
+# Libry
 A library web application
