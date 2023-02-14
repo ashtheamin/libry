@@ -1,7 +1,7 @@
 from flask import Flask
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path=('/static'))
 
 @app.route("/")
 def index():
-    return app.static_url_path('index.html')
+    return app.send_static_file('index.html')
