@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 
-from database import load_book_database, add_to_database, delete_from_database
+from database import database_book_add, database_book_load, database_book_delete
 
 app = Flask(__name__, static_url_path=("/static"))
 @app.route("/")
@@ -17,7 +17,7 @@ def users():
 
 @app.route("/bookdb")
 def bookdb():
-    book_database = load_book_database()
+    book_database = database_book_load()
     return jsonify(book_database)
 
 @app.route("/recievedata", methods=["POST"])
@@ -31,7 +31,7 @@ def admin():
 
 @app.route("/addbook", methods=["POST"])
 def addbook():
-    book_database = load_book_database()
+    book_database = database_book_load()
     id = "0"
     if len(book_database) < 1:
            id = "0"
@@ -41,10 +41,10 @@ def addbook():
                 id = book['id']
         id = str(int(id) + 1)
 
-    add_to_database(id , request.form["title"], request.form["year"], request.form["description"])
+    database_book_add(id , request.form["title"], request.form["year"], request.form["description"])
     return app.send_static_file("admin.html")
 
 @app.route("/deletebook", methods=["POST"])
 def deletebook():
-    delete_from_database(request.form['id'])
+    database_book_delete(request.form['id'])
     return app.send_static_file("admin.html")

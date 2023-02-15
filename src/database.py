@@ -1,28 +1,26 @@
 import sqlite3
 import os
 
-def init_database():
+def database_init():
     if os.path.exists("books.db") == False:
         con = sqlite3.connect('books.db')
         cur = con.cursor()
 
         cur.execute('''CREATE TABLE books (id text, title text, year text, description text)''')
 
-        cur.execute("INSERT INTO ids VALUES (1, 'books')")
         con.commit()
         con.close()
 
-def load_book_database():
+def database_book_load():
     if os.path.exists("books.db") == False:
-        init_database()
+        database_init()
 
     con = sqlite3.connect('books.db')
     cur = con.cursor()
 
     book_database = []
     for row in cur.execute('SELECT * FROM books'):
-        print(row)
-        book = {"id":"","title":"1", "year":"", "description":""}
+        book = {"id":"","title":"", "year":"", "description":""}
         book["id"] = row[0]
         book['title'] = row[1]
         book['year'] = row[2]
@@ -33,9 +31,9 @@ def load_book_database():
     con.close()
     return book_database
 
-def add_to_database(id, title, year, description):
+def database_book_add(id, title, year, description):
     if os.path.exists("books.db") == False:
-        init_database()
+        database_init()
     
     con = sqlite3.connect('books.db')
     cur = con.cursor()
@@ -45,9 +43,9 @@ def add_to_database(id, title, year, description):
     con.commit()
     con.close()
 
-def delete_from_database(id):
+def database_book_delete(id):
     if os.path.exists("books.db") == False:
-        init_database()
+        database_init()
     
     con = sqlite3.connect('books.db')
     cur = con.cursor()
