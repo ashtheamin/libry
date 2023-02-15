@@ -33,11 +33,14 @@ def admin():
 def addbook():
     book_database = load_database()
     print(book_database)
-    id = 0
-    if str(int(book_database[len(book_database)-1]['id'])) == "":
-           id = 0
+    id = "0"
+    if len(book_database) < 1:
+           id = "0"
     else:
-        id = str(int(book_database[len(book_database)-1]['id'])) + 1
+        for book in book_database:
+            if book['id'] >= id:
+                id = book['id']
+        id = str(int(id) + 1)
 
     add_to_database(id , request.form["title"], request.form["year"], request.form["description"])
     return app.send_static_file("admin.html")

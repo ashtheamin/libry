@@ -10,7 +10,7 @@ def init_database():
 
         cur.execute('''CREATE TABLE books (id text, title text, year text, description text)''')
         
-        cur.execute("INSERT INTO books VALUES ('1', 'The best book ever', '2014', 'The greatest description ever')")
+        #cur.execute("INSERT INTO books VALUES ('1', 'The best book ever', '2014', 'The greatest description ever')")
 
         con.commit()
         con.close()
