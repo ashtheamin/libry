@@ -1,21 +1,18 @@
 import sqlite3
 import os
 
-book_database = []
-
 def init_database():
     if os.path.exists("books.db") == False:
         con = sqlite3.connect('books.db')
         cur = con.cursor()
 
         cur.execute('''CREATE TABLE books (id text, title text, year text, description text)''')
-        
-        #cur.execute("INSERT INTO books VALUES ('1', 'The best book ever', '2014', 'The greatest description ever')")
 
+        cur.execute("INSERT INTO ids VALUES (1, 'books')")
         con.commit()
         con.close()
 
-def load_database():
+def load_book_database():
     if os.path.exists("books.db") == False:
         init_database()
 
@@ -44,6 +41,18 @@ def add_to_database(id, title, year, description):
     cur = con.cursor()
 
     cur.execute("INSERT INTO books VALUES (?, ?, ?, ?)", (id, title, year, description))
+
+    con.commit()
+    con.close()
+
+def delete_from_database(id):
+    if os.path.exists("books.db") == False:
+        init_database()
+    
+    con = sqlite3.connect('books.db')
+    cur = con.cursor()
+
+    cur.execute("DELETE FROM books WHERE id=(?)", (id))
 
     con.commit()
     con.close()
